@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from django.views.generic import TemplateView
 #from django.views.generic.base import RedirectView
@@ -12,4 +12,5 @@ urlpatterns = [
     path('post/', views.PostListView.as_view(), name = 'post-list'),
     #path("cbv-index", views.IndexView.as_view(), name="cbv-index"),
     path("post/<int:pk>/",views.PostDetailView.as_view(), name="post-detail"),
+    path('api/v1/', include('blog.api.v1.urls'))
 ]

@@ -4,13 +4,14 @@ from rest_framework.response import Response
 from rest_framework import status, viewsets
 from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from django.shortcuts import get_object_or_404 
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+from django.shortcuts import get_object_or_404
+
 from .serializers import PostSerializer, CategorySerializer
 from ...models import Post, Category
 from .permissions import IsOwnerOrReadOnly
 from .paginations import CustomDefaultPagination
-from rest_framework.filters import SearchFilter, OrderingFilter
-from django_filters.rest_framework import DjangoFilterBackend
 
 
 # class base model_viewset
@@ -22,9 +23,9 @@ class PostModelViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     pagination_class = CustomDefaultPagination
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['category', 'author']
-    search_fields = ['title', 'content', 'category__name']
-    ordering_fields = ['published_date']
+    filterset_fields = ["category", "author"]
+    search_fields = ["title", "content", "category__name"]
+    ordering_fields = ["published_date"]
 
 
 # # class base viewset view
@@ -43,7 +44,7 @@ class PostModelViewSet(viewsets.ModelViewSet):
 #         post_object = get_object_or_404(self.queryset, pk=pk)
 #         serializer = self.serializer_class(post_object)
 #         return Response(serializer.data)
-    
+
 #     def create(self, request):
 #         pass
 
@@ -55,7 +56,6 @@ class PostModelViewSet(viewsets.ModelViewSet):
 
 #     def destroy(self, request, pk=None):
 #         pass
-
 
 
 # # class base generics view(post_list)
@@ -77,7 +77,7 @@ class PostModelViewSet(viewsets.ModelViewSet):
 # # class base api view(post_list)
 # class PostList(APIView):
 #     """getting a list of posts and creating a post"""
-    
+
 #     permission_classes = [IsAuthenticatedOrReadOnly]
 #     serializer_class = PostSerializer
 #     def get(self, request):
@@ -125,8 +125,6 @@ class PostModelViewSet(viewsets.ModelViewSet):
 #         return Response({'detail':'post removed successfully'},status = status.HTTP_204_NO_CONTENT)
 
 
-
-
 # # function base api view(post_list)
 # @api_view(['GET','POST'])
 # @permission_classes([IsAuthenticatedOrReadOnly])
@@ -141,7 +139,6 @@ class PostModelViewSet(viewsets.ModelViewSet):
 #         serializer.is_valid(raise_exception= True)
 #         serializer.save()
 #         return Response(serializer.data)
-
 
 
 # # function base api view(post_detail)
@@ -176,7 +173,6 @@ class PostModelViewSet(viewsets.ModelViewSet):
 
 
 class CategoryModelViewSet(viewsets.ModelViewSet):
-
     queryset = Category.objects.all()
     permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = CategorySerializer

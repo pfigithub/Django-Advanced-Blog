@@ -29,7 +29,7 @@ class PostSerializer(serializers.ModelSerializer):
         # read_only_fields = ['title', 'status']
 
     def to_representation(self, instance):
-        request = self.context.get("request")
+        # request = self.context.get("request")
         rep = super().to_representation(instance)
         # exmple for seprating
         # if request.parser_context.get('kwargs').get('pk'):

@@ -1,6 +1,4 @@
-from collections.abc import Callable, Iterable, Mapping
 import threading
-from typing import Any
 
 
 class EmailThread(threading.Thread):
